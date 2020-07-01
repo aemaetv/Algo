@@ -11,7 +11,7 @@ typedef struct head {
 	int size;
 }Head;
 
-bool nodeInsert(Head* &head, int data) {//Head* &head=>참조자, 별명 같은거
+bool nodePush(Head* &head, int data) {//Head* &head=>참조자, 별명 같은거
 	try {
 		Node *tmp = new Node;
 		tmp->data = data;
@@ -27,11 +27,24 @@ bool nodeInsert(Head* &head, int data) {//Head* &head=>참조자, 별명 같은거
 
 
 }
+int nodePop(Head*&head) {
+	if (head->size == 0)
+	{
+		return -1;
+	}
+	Node *tmp = head->head;
+	head->head = head->head->next;
+
+	int data = tmp->data;
+	delete tmp;
+
+	return data;
+}
 void nodePrint(Head* &head) {
 	Node *tmp = head->head;
 	while (tmp != NULL)
 	{
-		cout << tmp->data << "";
+		cout << tmp->data << " ";
 		tmp = tmp->next;
 	}
 	cout << "\n";
@@ -54,13 +67,20 @@ int main() {
 	head->head = NULL;
 	head->size = 0;
 
+	cout << nodePop(head) << "\n";
 
-	nodeInsert(head, 10);
+	nodePush(head, 10);
+	nodePush(head, 20);
+	nodePush(head, 30);
+
 	nodePrint(head);
-	nodeInsert(head, 20);
+	cout <<"Pop: " <<nodePop(head) << "\n";
 	nodePrint(head);
-	nodeInsert(head, 30);
+	cout << "Pop: " << nodePop(head) << "\n";
 	nodePrint(head);
+
+
+
 
 	/*Node *node1 = new Node;
 	node1->data = 10;
