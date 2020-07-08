@@ -36,18 +36,18 @@ private:
 
 public:
 	LinkedList() {
-		this->head = new Node();
+		this->head = nullptr;
 		this->size=0;
 	}
 	~LinkedList() {
 		Node *curr = head;
-		while (curr != NULL)
+		while (curr !=nullptr)
 		{
 			Node *tmp = curr;
 			curr = curr->getNext();
 			delete tmp;
 		}
-		delete head;
+		cout << "Linked Clear\n";
 	}
 	void addSize() { this->size++; }
 	void subsize() { this->size--; }
@@ -61,15 +61,20 @@ public:
 };
 
 void LinkedList::nodePush(int data) {
-	Node *tmp = new Node(data);
-	tmp->setNext(head->getNext());
-	setHead(tmp);
+	if (size == 0) {
+		head = new Node(data);
+	}
+	else {
+		Node *tmp = new Node(data);
+		tmp->setNext(head);
+		setHead(tmp);
+	}
 	addSize();
 }
 void LinkedList::nodePrint() {
 	Node *tmp = head;
 	cout << "Linked List data:";
-	while (tmp != NULL)
+	for(int i=0;i<size;i++)
 	{
 		cout << tmp->getData() << " ";
 		tmp = tmp->getNext();
@@ -87,6 +92,7 @@ int LinkedList::nodePop() {
 	int data = tmp->getData();
 	delete tmp;
 
+	size--;
 	return data;
 }
 
@@ -101,5 +107,6 @@ int main() {
 	list->nodePrint();
 
 	delete list;
+
 	return 0;
 }
